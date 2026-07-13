@@ -1,50 +1,59 @@
-# --- FUNÇÕES DO SISTEMA DE CAIXA ELETRÔNICO ---
+# --- CLASSE DO SISTEMA (Molde) ---
 
-def consultar_saldo(saldo):
-    print(f"\nSaldo atual: R${saldo:.2f}")
+class ContaBancaria:
+    def __init__(self, titular, saldo_inicial=0.0):
+        # Atributos: O estado da conta fica guardado aqui dentro 
+        self.titular = titular
+        self.saldo = saldo_inicial
+        self.extrato = []
 
-def depositar(saldo, valor):
-    if valor > 0:
-        novo_saldo = saldo + valor
-        print(f"Depósito de R${valor:.2f} realizado com sucesso!")
-        return novo_saldo
-    else:
-        print("Erro: O valor do depósito deve ser maior que zero.")
-        return saldo # Se der erro, retorna o saldo antigo sem alterar
-def sacar(saldo, valor):
-    if valor <= 0:
-        print("Erro: O valor do saque deve ser maior que zero.")
-        return saldo
-    elif valor > saldo:
-        print("Erro: Saldo insuficiente para realizar a operação.")
-        return saldo
-    else:
-        novo_saldo = saldo - valor
-        print(f"Saque de R${valor:.2f} realizado com sucesso!")
-        return novo_saldo
-    
-def registrar_transacao(extrato, tipo, valor):
-    # Cria um dicionário com os dados da transação e adiciona na lista
-    transacao = {"tipo": tipo, "valor": valor}
-    extrato.append(transacao)
+    def consultar_saldo(self):
+        print(f"\nSaldo atual: R${self.saldo:.2f}")
 
+    def depositar(self, valor):
+        if valor > 0:
+            self.saldo += valor
+            # O proprio método gerencia o extrato internamente
+            self.extrato.append({"tipo": "Depósito", "valor": valor})
+            print(f"Depósito de R${valor:.2f} realizado com sucesso!")
+            return True
+        else:
+            print("Erro: O valor do depósito deve ser maior que zero.")
+            return False
 
-def exibir_extrato(extrato):
-    print("\n=== EXTRATO BANCÁRIO ===")
-    if not extrato:
-        print("Nenhuma movimentação realizada.")
-    else:
-        for transacao in extrato:
-            print(f"{transacao['tipo']}: R${transacao['valor']:.2f}")
-    print("========================")
+    def sacar(self, valor):
+        if valor <= 0:
+            print("Erro: O valor do saque deve ser maior que zero.")
+            return False
+        elif valor > self.saldo:
+            print("Erro: Saldo insuficiente para realizar a operação.")
+            return False
+        else:
+            self.saldo -= valor
+            self.extrato.append({"tipo": "Saque", "valor": valor})
+            print(f"Saque de R${valor:.2f} realizado com sucesso!")
+            return True
 
-# --- FLUXO PRINCIPAL DO CAIXA ELETRÔNICO ---
+    def exibir_extrato(self):
+        print(f"\n=== EXTRATO BANCÁRIO — {self.titular.upper()} ===")
+        if not self.extrato:
+            print("Nenhuma movimentação realizada.")
+        else:
+            for transacao in self.extrato:
+                print(f"{transacao['tipo']}: R${transacao['valor']:.2f}")
+        print("========================")
 
-saldo = 1000.0
-extrato = [] # Lista iniciada vazia antes do loop
+    # 🌟 BÔNUS: Método especial (Dunder Method) para representação em texto
+    def __str__(self):
+        return f"Conta de {self.titular} — Saldo Atual: R${self.saldo:.2f}"
+
+# --- FLUXO PRINCIPAL (LOOP) ---
+
+# Criando o objeto 'conta' a partir do molde 'ContaBancaria'
+conta = ContaBancaria("Adams Yoshiharu Ishii", 1000.0)
 
 while True:
-    print("\n=== Caixa Eletrônico ===")
+    print("\n=== Caixa Eletrônico (POO) ===")
     print("1. Consultar saldo")
     print("2. Sacar")
     print("3. Depositar")
@@ -53,33 +62,24 @@ while True:
     opcao = input("Escolha uma opção: ")
 
     if opcao == "5":
-        print("Obrigado por usar o nosso banco!")
+        print("Obrigado por usar nosso banco!")
         break
-        
+
     elif opcao == "1":
-        consultar_saldo(saldo)
+        # Graças ao método bônus __str__, podemos usar o print direto no objeto!
+        print(f"\n{conta}")
         
     elif opcao == "2":
         valor_saque = float(input("Valor do saque: "))
-        saldo_antigo = saldo
-        saldo = sacar(saldo, valor_saque)
-        
-        # Se o saldo mudou, significa que o saque foi bem-sucedido
-        if saldo != saldo_antigo:
-            registrar_transacao(extrato, "Saque", valor_saque)
+        # Não precisamos mais checar se mudou o saldo por fora, o método resolve tudo
+        conta.sacar(valor_saque)
 
     elif opcao == "3":
         valor_deposito = float(input("Valor do depósito: "))
-        saldo_antigo = saldo
-        saldo = depositar(saldo, valor_deposito)
-        
-        # Se o saldo mudou, significa que o depósito foi bem-sucedido
-        if saldo != saldo_antigo:
-            registrar_transacao(extrato, "Depósito", valor_deposito)
+        conta.depositar(valor_deposito)
 
     elif opcao == "4":
-        exibir_extrato(extrato)
+        conta.exibir_extrato()
 
     else:
         print("Opção inválida, tente novamente.")
-        
