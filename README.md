@@ -1,23 +1,16 @@
-# simulador-caixa-eletronico
-Criando interface de um caixa eletronico com evolução de menu
+🏦 Simulador de Caixa Eletrônico
+Python GitHub Codespaces Git
 
-Construção de um programa em Python que simule um caixa eletrônico simples.
-Requisitos:
+Um simulador de caixa eletrônico interativo desenvolvido em Python. Este projeto roda diretamente no terminal e permite aos usuários realizar operações bancárias básicas, mantendo um registro detalhado das transações.
 
-Comece com saldo = 1000.0.
-Mostrar um menu em loop:
+🧠 Aprendizados Este projeto foi fundamental para praticar conceitos de fluxo de controle (while, if/elif/else), conversão de tipos de dados, manipulação de strings (f-strings) e o escopo de variáveis dentro e fora de funções em Python.
 
-   1 - Consultar saldo
-   2 - Depositar
-   3 - Sacar
-   4 - Sair
-
-O menu vai continuar aparecendo até o usuário escolher Sair.
-
-Depositar: pedir um valor; só aceitar se for maior que zero.
-Sacar: pedir um valor; não pode ser maior que o saldo, nem menor/igual a zero.
-
-Em qualquer entrada inválida, mostrar uma mensagem de erro clara (sem quebrar o programa).
-Ao sair, imprimir "Obrigado por usar nosso banco!".
-
-Tentar combinar while, if/elif/else e conversão de tipos (float()) vai melhorar a experiência do usuário.
+🚀 Funcionalidades
+Consultar Saldo: Visualização do saldo atual em tempo real.
+Depósito: Adição de valores com validação (apenas valores positivos).
+Saque: Subtração de valores com validação de saldo insuficiente e regras de negócio.
+Extrato Bancário: Histórico detalhado de todas as transações de saque e depósito válidas durante a sessão.
+🛠️ Tecnologias e Conceitos Utilizados
+Python 3: Linguagem principal do projeto.
+Clean Code & Modularização: O código foi refatorado para utilizar funções isoladas (sacar, depositar, exibir_extrato), retirando a carga do loop principal.
+Estruturas de Dados: Uso de Listas e Dicionários para gerenciar o histórico do extrato.
