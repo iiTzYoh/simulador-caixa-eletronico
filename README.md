@@ -23,4 +23,4 @@ Este projeto foi fundamental para praticar conceitos de fluxo de controle (while
 - **Python 3:** Linguagem principal do projeto.
 - **Clean Code & Modularização:** O código foi refatorado para utilizar funções isoladas (`sacar`, `depositar`, `exibir_extrato`), retirando a carga do loop principal.
 - **Estruturas de Dados:** Uso de Listas e Dicionários para gerenciar o histórico do extrato.
-  > > > > > > > f55a326d4a32b139276438b6f6f4bc6fe99b8820
+  
