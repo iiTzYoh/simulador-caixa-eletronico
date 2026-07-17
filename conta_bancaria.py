@@ -1,10 +1,11 @@
 class ContaBancaria:
-    # Adicionamos o extrato_inicial para conseguir carregar do JSON depois
+    # Utilizando 'None' para evitar a armadilha do argumento padrão mutável
     def __init__(self, titular, saldo_inicial=0.0, extrato_inicial=None):
         self.titular = titular
         self.saldo = saldo_inicial
         
-        # Se não vier extrato do JSON, inicia vazio. Se vier, usa o carregado.
+        # Se não vier extrato do JSON, inicia uma nova lista vazia na memória.
+        # Se vier, utiliza a lista carregada do disco.
         if extrato_inicial is None:
             self.extrato = []
         else:
@@ -28,7 +29,7 @@ class ContaBancaria:
             print("Erro: O valor do saque deve ser maior que zero.")
             return False
         elif valor > self.saldo:
-            print("Erro: Saldo insuficiente.")
+            print("Erro: Saldo insuficiente para realizar a operação.")
             return False
         else:
             self.saldo -= valor
@@ -39,7 +40,7 @@ class ContaBancaria:
     def exibir_extrato(self):
         print(f"\n=== EXTRATO BANCÁRIO — {self.titular.upper()} ===")
         if not self.extrato:
-            print("Nenhuma movimentação.")
+            print("Nenhuma movimentação realizada.")
         else:
             for transacao in self.extrato:
                 print(f"{transacao['tipo']}: R${transacao['valor']:.2f}")

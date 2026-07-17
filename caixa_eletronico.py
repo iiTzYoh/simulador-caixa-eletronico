@@ -1,22 +1,18 @@
 import json
-# Importando a classe do nosso novo arquivo conta_bancaria.py
 from conta_bancaria import ContaBancaria
 
 NOME_ARQUIVO = 'dados_conta.json'
+NOME_TITULAR = 'Yoshiharu Ishii'
 
-# --- INICIALIZAÇÃO E PERSISTÊNCIA ---
 print("Iniciando sistema...")
 try:
-    # Tenta abrir o arquivo em modo leitura ('r')
     with open(NOME_ARQUIVO, 'r') as arquivo:
         dados = json.load(arquivo)
-        # Instancia a conta com os dados lidos do JSON
-        conta = ContaBancaria("Yoshiharu Ishii", dados['saldo'], dados['extrato'])
+        conta = ContaBancaria(NOME_TITULAR, dados['saldo'], dados['extrato'])
         print("Dados carregados com sucesso!")
 except FileNotFoundError:
-    # Se o arquivo não existir (primeira vez rodando), cria do zero
     print("Nenhum dado anterior encontrado. Criando nova conta.")
-    conta = ContaBancaria("Yoshiharu Ishii", 1000.0)
+    conta = ContaBancaria(NOME_TITULAR, 1000.0)
 
 
 # --- LOOP PRINCIPAL ---

@@ -1,21 +1,21 @@
 {
-  "saldo": 2700.0,
-  "extrato": [
-    {
-      "tipo": "Dep\u00f3sito",
-      "valor": 500.0
-    },
-    {
-      "tipo": "Saque",
-      "valor": 200.0
-    },
-    {
-      "tipo": "Dep\u00f3sito",
-      "valor": 2000.0
-    },
-    {
-      "tipo": "Saque",
-      "valor": 600.0
-    }
-  ]
+    "saldo": 2700.0,
+    "extrato": [
+        {
+            "tipo": "Dep\u00f3sito",
+            "valor": 500.0
+        },
+        {
+            "tipo": "Saque",
+            "valor": 200.0
+        },
+        {
+            "tipo": "Dep\u00f3sito",
+            "valor": 2000.0
+        },
+        {
+            "tipo": "Saque",
+            "valor": 600.0
+        }
+    ]
 }
