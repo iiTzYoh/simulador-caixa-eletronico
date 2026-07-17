@@ -16,6 +16,4 @@ Um simulador de caixa eletrônico interativo em Python, focado em boas práticas
 ## 🛠️ Como executar o projeto
 
 1. Clone este repositório:
-   ```bash
-   git clone [https://github.com/iiTzYoh/simulador-caixa-eletronico.git](https://github.com/iiTzYoh/simulador-caixa-eletronico.git)
-   ```
+  git clone https://github.com/iiTzYoh/simulador-caixa-eletronico.git
