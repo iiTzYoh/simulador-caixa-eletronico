@@ -1,25 +1,21 @@
-=======
-
 # 🏦 Simulador de Caixa Eletrônico
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![GitHub Codespaces](https://img.shields.io/badge/Codespaces-181717?style=for-the-badge&logo=github&logoColor=white)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
-Um simulador de caixa eletrônico interativo desenvolvido em Python. Este projeto roda diretamente no terminal e permite aos usuários realizar operações bancárias básicas, mantendo um registro detalhado das transações.
+Um simulador de caixa eletrônico interativo em Python, focado em boas práticas de Programação Orientada a Objetos (POO), resiliência e persistência de dados.
 
-🧠 Aprendizados
-Este projeto foi fundamental para praticar conceitos de fluxo de controle (while, if/elif/else), conversão de tipos de dados, manipulação de strings (f-strings) e o escopo de variáveis dentro e fora de funções em Python.
+## 🚀 Funcionalidades e Arquitetura
 
-## 🚀 Funcionalidades
+- **Orientação a Objetos:** Lógica de negócio encapsulada de forma modular na classe `ContaBancaria`.
+- **Persistência de Dados (JSON):** O saldo e o histórico de transações são salvos localmente. Ao reiniciar a aplicação, o estado da conta é restaurado automaticamente, garantindo a continuidade das operações.
+- **Tratamento de Exceções:** Sistema robusto com `try/except/finally` para evitar crashes por entradas inválidas do usuário (ex: validação de _floats_ contra _strings_).
+- **Operações Básicas:** Consultar saldo, depósitos, saques (com regras de negócio e validação de saldo insuficiente) e exibição de extrato formatado.
 
-- **Consultar Saldo:** Visualização do saldo atual em tempo real.
-- **Depósito:** Adição de valores com validação (apenas valores positivos).
-- **Saque:** Subtração de valores com validação de saldo insuficiente e regras de negócio.
-- **Extrato Bancário:** Histórico detalhado de todas as transações de saque e depósito válidas durante a sessão.
+## 🛠️ Como executar o projeto
 
-## 🛠️ Tecnologias e Conceitos Utilizados
-
-- **Python 3:** Linguagem principal do projeto.
-- **Clean Code & Modularização:** O código foi refatorado para utilizar funções isoladas (`sacar`, `depositar`, `exibir_extrato`), retirando a carga do loop principal.
-- **Estruturas de Dados:** Uso de Listas e Dicionários para gerenciar o histórico do extrato.
+1. Clone este repositório:
+   ```bash
+   git clone [https://github.com/iiTzYoh/simulador-caixa-eletronico.git](https://github.com/iiTzYoh/simulador-caixa-eletronico.git)
+   ```
