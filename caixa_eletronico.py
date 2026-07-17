@@ -1,59 +1,27 @@
-# --- CLASSE DO SISTEMA (Molde) ---
+import json
+# Importando a classe do nosso novo arquivo conta_bancaria.py
+from conta_bancaria import ContaBancaria
 
-class ContaBancaria:
-    def __init__(self, titular, saldo_inicial=0.0):
-        # Atributos: O estado da conta fica guardado aqui dentro 
-        self.titular = titular
-        self.saldo = saldo_inicial
-        self.extrato = []
+NOME_ARQUIVO = 'dados_conta.json'
 
-    def consultar_saldo(self):
-        print(f"\nSaldo atual: R${self.saldo:.2f}")
+# --- INICIALIZAÇÃO E PERSISTÊNCIA ---
+print("Iniciando sistema...")
+try:
+    # Tenta abrir o arquivo em modo leitura ('r')
+    with open(NOME_ARQUIVO, 'r') as arquivo:
+        dados = json.load(arquivo)
+        # Instancia a conta com os dados lidos do JSON
+        conta = ContaBancaria("Yoshiharu Ishii", dados['saldo'], dados['extrato'])
+        print("Dados carregados com sucesso!")
+except FileNotFoundError:
+    # Se o arquivo não existir (primeira vez rodando), cria do zero
+    print("Nenhum dado anterior encontrado. Criando nova conta.")
+    conta = ContaBancaria("Yoshiharu Ishii", 1000.0)
 
-    def depositar(self, valor):
-        if valor > 0:
-            self.saldo += valor
-            # O proprio método gerencia o extrato internamente
-            self.extrato.append({"tipo": "Depósito", "valor": valor})
-            print(f"Depósito de R${valor:.2f} realizado com sucesso!")
-            return True
-        else:
-            print("Erro: O valor do depósito deve ser maior que zero.")
-            return False
 
-    def sacar(self, valor):
-        if valor <= 0:
-            print("Erro: O valor do saque deve ser maior que zero.")
-            return False
-        elif valor > self.saldo:
-            print("Erro: Saldo insuficiente para realizar a operação.")
-            return False
-        else:
-            self.saldo -= valor
-            self.extrato.append({"tipo": "Saque", "valor": valor})
-            print(f"Saque de R${valor:.2f} realizado com sucesso!")
-            return True
-
-    def exibir_extrato(self):
-        print(f"\n=== EXTRATO BANCÁRIO — {self.titular.upper()} ===")
-        if not self.extrato:
-            print("Nenhuma movimentação realizada.")
-        else:
-            for transacao in self.extrato:
-                print(f"{transacao['tipo']}: R${transacao['valor']:.2f}")
-        print("========================")
-
-    # 🌟 BÔNUS: Método especial (Dunder Method) para representação em texto
-    def __str__(self):
-        return f"Conta de {self.titular} — Saldo Atual: R${self.saldo:.2f}"
-
-# --- FLUXO PRINCIPAL (LOOP) ---
-
-# Criando o objeto 'conta' a partir do molde 'ContaBancaria'
-conta = ContaBancaria("Adams Yoshiharu Ishii", 1000.0)
-
+# --- LOOP PRINCIPAL ---
 while True:
-    print("\n=== Caixa Eletrônico (POO) ===")
+    print("\n=== Caixa Eletrônico (Modular & Robusto) ===")
     print("1. Consultar saldo")
     print("2. Sacar")
     print("3. Depositar")
@@ -62,21 +30,38 @@ while True:
     opcao = input("Escolha uma opção: ")
 
     if opcao == "5":
-        print("Obrigado por usar nosso banco!")
+        # Antes de quebrar o loop, salva o estado atual no disco
+        dados_para_salvar = {
+            "saldo": conta.saldo,
+            "extrato": conta.extrato
+        }
+        with open(NOME_ARQUIVO, 'w') as arquivo:
+            # indent=4 deixa o arquivo JSON formatado bonito e legível
+            json.dump(dados_para_salvar, arquivo, indent=4)
+            
+        print("Dados salvos com segurança. Obrigado por usar nosso banco!")
         break
 
     elif opcao == "1":
-        # Graças ao método bônus __str__, podemos usar o print direto no objeto!
         print(f"\n{conta}")
-        
+
     elif opcao == "2":
-        valor_saque = float(input("Valor do saque: "))
-        # Não precisamos mais checar se mudou o saldo por fora, o método resolve tudo
-        conta.sacar(valor_saque)
+        try:
+            valor_saque = float(input("Valor do saque: "))
+            conta.sacar(valor_saque)
+        except ValueError:
+            print("Erro de digitação: Por favor, insira apenas números válidos (ex: 50.50).")
+        finally:
+            print("-" * 30)
 
     elif opcao == "3":
-        valor_deposito = float(input("Valor do depósito: "))
-        conta.depositar(valor_deposito)
+        try:
+            valor_deposito = float(input("Valor do depósito: "))
+            conta.depositar(valor_deposito)
+        except ValueError:
+            print("Erro de digitação: Por favor, insira apenas números válidos (ex: 50.50).")
+        finally:
+            print("-" * 30)
 
     elif opcao == "4":
         conta.exibir_extrato()
